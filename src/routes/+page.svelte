@@ -1,11 +1,16 @@
-<div class="hello"></div>
+<script>
+	import Navbar from '../components/Navbar.svelte';
+</script>
+
+<div class="pageContainer">
+	<Navbar />
+</div>
 
 <style>
-	.hello {
-		width: 100px;
-		height: 1000px;
-		background: red;
-		padding: 0;
-		margin: 0;
+	.pageContainer {
+		height: auto;
+		min-height: 100vh;
+		background: #141414;
+		position: relative;
 	}
 </style>
