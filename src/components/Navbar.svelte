@@ -20,7 +20,6 @@
 		/* From https://css.glass */
 		background: rgba(60, 58, 60, 0.06);
 		border-radius: 10px;
-		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(13.5px);
 		-webkit-backdrop-filter: blur(13.5px);
 		border-bottom: 1px solid rgba(60, 58, 60, 0.3);
