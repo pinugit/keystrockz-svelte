@@ -1,13 +1,23 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Cursor from '../components/Cursor.svelte';
 
 	let wordArray: string[] = [];
+
+	const noOfLetterPerWordArray: number[] = [];
 
 	onMount(async () => {
 		const response = await fetch('/api/random-array/');
 		wordArray = await response.json();
 		console.log(wordArray);
+		updateNoOfLetterPerWordArray();
 	});
+
+	const updateNoOfLetterPerWordArray = () => {
+		wordArray.map((word) => {
+			noOfLetterPerWordArray.push(word.length);
+		});
+	};
 </script>
 
 <div class="page-container">
@@ -21,6 +31,7 @@
 		{/each}
 	</div>
 </div>
+<Cursor {noOfLetterPerWordArray} />
 
 <style>
 	.page-container {
