@@ -43,17 +43,11 @@
 		const currentLetter = currentElement[0].innerHTML;
 
 		if (key === 'Backspace') {
-			if (currentLetterIndex != 0 && currentWordIndex != 0) {
-				console.log('entered ');
-
+			if (currentWordIndex > 0 || currentLetterIndex > 0) {
 				if (currentLetterIndex === 0) {
-					console.log('minising word');
-
 					currentWordIndex -= 1;
-					currentLetterIndex = noOfLetterPerWordArray[currentWordIndex - 1];
+					currentLetterIndex = noOfLetterPerWordArray[currentWordIndex];
 				} else {
-					console.log('minusing letter');
-
 					currentLetterIndex -= 1;
 				}
 			}
