@@ -18,6 +18,7 @@
 			noOfLetterPerWordArray.push(word.length);
 		});
 	};
+	const space = ' ';
 </script>
 
 <div class="page-container">
@@ -27,6 +28,7 @@
 				{#each word as letter, letterIndex}
 					<div class={`letter-${wordIndex}-${letterIndex}`}>{letter}</div>
 				{/each}
+				<div class={`letter-${wordIndex}-${word.length} space`}>{space}</div>
 			</div>
 		{/each}
 	</div>
@@ -54,8 +56,10 @@
 	}
 	.words {
 		display: flex;
-		margin-left: 20px;
 		margin-bottom: 22px;
 		margin-top: 0;
+	}
+	.space {
+		width: 20px;
 	}
 </style>
