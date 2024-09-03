@@ -23,4 +23,7 @@
 		position: relative;
 		padding: 0 80px;
 	}
+	.w {
+		color: red;
+	}
 </style>

@@ -6,7 +6,6 @@
 	let initialY = 0;
 	let currentWordIndex = 0;
 	let currentLetterIndex = 0;
-	let isFirstLinePassed = false;
 	let inputValue = '';
 	export let noOfLetterPerWordArray;
 
@@ -23,6 +22,25 @@
 		}
 	};
 
+	const setLetterColorState = (key) => {
+		const currentElement = document.getElementsByClassName(
+			`letter-${currentWordIndex}-${currentLetterIndex}`
+		);
+		if (currentElement) {
+			const currentLetter = currentElement[0].innerHTML;
+			// change the letter state
+			if (currentLetter != ' ') {
+				if (key != currentLetter) {
+					currentElement[0].classList.remove('due');
+					currentElement[0].classList.add('incorrect-word');
+				} else {
+					currentElement[0].classList.remove('due');
+					currentElement[0].classList.add('correct-word');
+				}
+			}
+		}
+	};
+
 	afterUpdate(() => {
 		const currentElement = document.getElementsByClassName(
 			`letter-${currentWordIndex}-${currentLetterIndex}`
@@ -35,14 +53,14 @@
 
 	const handleTyping = (event) => {
 		const key = event.key;
+		inputValue = '';
 		console.log(key);
 
-		const currentElement = document.getElementsByClassName(
-			`letter-${currentWordIndex}-${currentLetterIndex}`
-		);
-		const currentLetter = currentElement[0].innerHTML;
-
-		if (key === 'Backspace') {
+		//move the curor position
+		if (key === 'Shift' || key === 'Control' || key === 'Alt') {
+			//if these keys are pressed skip it all together
+			return;
+		} else if (key === 'Backspace') {
 			if (currentWordIndex > 0 || currentLetterIndex > 0) {
 				if (currentLetterIndex === 0) {
 					currentWordIndex -= 1;
@@ -50,19 +68,25 @@
 				} else {
 					currentLetterIndex -= 1;
 				}
+
+				//handling the backspace differently for changing the color of the letter
+				const currentElement = document.getElementsByClassName(
+					`letter-${currentWordIndex}-${currentLetterIndex}`
+				);
+
+				currentElement[0].classList.remove('correct-word', 'incorrect-word');
+				currentElement[0].classList.add('due');
 			}
 		} else if (currentLetterIndex === noOfLetterPerWordArray[currentWordIndex]) {
+			setLetterColorState(key);
 			currentWordIndex += 1;
 			currentLetterIndex = 0;
 		} else {
+			setLetterColorState(key);
 			currentLetterIndex += 1;
 		}
 
-		console.log(currentWordIndex, currentLetterIndex);
-
 		setCursorPosition();
-
-		inputValue = '';
 	};
 
 	onMount(() => {

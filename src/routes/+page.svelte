@@ -26,9 +26,9 @@
 		{#each wordArray as word, wordIndex}
 			<div class="words">
 				{#each word as letter, letterIndex}
-					<div class={`letter-${wordIndex}-${letterIndex}`}>{letter}</div>
+					<div class={`letter-${wordIndex}-${letterIndex} due`}>{letter}</div>
 				{/each}
-				<div class={`letter-${wordIndex}-${word.length} space`}>{space}</div>
+				<div class={`letter-${wordIndex}-${word.length} space due`}>{space}</div>
 			</div>
 		{/each}
 	</div>
@@ -61,5 +61,9 @@
 	}
 	.space {
 		width: 20px;
+	}
+	/* these classes are for letters to set there colors based on the user typong */
+	.due {
+		color: #8c8c8c;
 	}
 </style>
