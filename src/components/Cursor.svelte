@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { afterUpdate, onMount } from 'svelte';
 
 	let x = 0;
@@ -7,7 +7,7 @@
 	let currentWordIndex = 0;
 	let currentLetterIndex = 0;
 	let inputValue = '';
-	let inputRef;
+	let inputRef: HTMLInputElement;
 	export let noOfLetterPerWordArray;
 
 	export const toggleInputFocus = () => {
@@ -26,7 +26,7 @@
 		}
 	};
 
-	const setLetterColorState = (key) => {
+	const setLetterColorState = (key: string) => {
 		const currentElement = document.getElementsByClassName(
 			`letter-${currentWordIndex}-${currentLetterIndex}`
 		);
@@ -45,7 +45,7 @@
 		}
 	};
 
-	const handleTyping = (event) => {
+	const handleTyping = (event: { key: string }) => {
 		const key = event.key;
 		inputValue = '';
 		console.log(key);
