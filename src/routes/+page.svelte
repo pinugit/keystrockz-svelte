@@ -3,8 +3,8 @@
 	import Cursor from '../components/Cursor.svelte';
 
 	let wordArray: string[] = [];
-
 	const noOfLetterPerWordArray: number[] = [];
+	let toggleInputFocusOnChildren;
 
 	onMount(async () => {
 		const response = await fetch('/api/random-array/');
@@ -18,11 +18,25 @@
 			noOfLetterPerWordArray.push(word.length);
 		});
 	};
+
+	const handleInputFoucs = () => {
+		if (toggleInputFocusOnChildren) {
+			toggleInputFocusOnChildren();
+		}
+	};
+
 	const space = ' ';
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="page-container">
-	<div class="typing-container">
+	<div
+		class="typing-container"
+		on:click={handleInputFoucs}
+		role="button"
+		tabindex="0"
+		aria-label="click here to start typing"
+	>
 		{#each wordArray as word, wordIndex}
 			<div class="words">
 				{#each word as letter, letterIndex}
@@ -33,7 +47,7 @@
 		{/each}
 	</div>
 </div>
-<Cursor {noOfLetterPerWordArray} />
+<Cursor {noOfLetterPerWordArray} bind:toggleInputFocus={toggleInputFocusOnChildren} />
 
 <style>
 	.page-container {
@@ -47,7 +61,7 @@
 	.typing-container {
 		height: 200px;
 		width: 100%;
-		overflow: scroll;
+		overflow: hidden;
 		scrollbar-width: none;
 		font-size: 40px;
 		font-family: 'jetbrains mono';

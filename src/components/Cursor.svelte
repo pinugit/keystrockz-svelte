@@ -7,8 +7,12 @@
 	let currentWordIndex = 0;
 	let currentLetterIndex = 0;
 	let inputValue = '';
+	let inputRef;
 	export let noOfLetterPerWordArray;
 
+	export const toggleInputFocus = () => {
+		inputRef.focus();
+	};
 	const setCursorPosition = () => {
 		const currentElement = document.getElementsByClassName(
 			`letter-${currentWordIndex}-${currentLetterIndex}`
@@ -40,16 +44,6 @@
 			}
 		}
 	};
-
-	afterUpdate(() => {
-		const currentElement = document.getElementsByClassName(
-			`letter-${currentWordIndex}-${currentLetterIndex}`
-		);
-		currentElement[0].scrollIntoView({
-			behavior: 'smooth',
-			block: 'center'
-		});
-	});
 
 	const handleTyping = (event) => {
 		const key = event.key;
@@ -95,6 +89,16 @@
 			initialY = y;
 		}, 200);
 	});
+
+	afterUpdate(() => {
+		const currentElement = document.getElementsByClassName(
+			`letter-${currentWordIndex}-${currentLetterIndex}`
+		);
+		currentElement[0].scrollIntoView({
+			behavior: 'smooth',
+			block: 'center'
+		});
+	});
 </script>
 
 {#if y > 10}
@@ -102,8 +106,8 @@
 {/if}
 <input
 	type="text"
-	id="myInput"
-	style="position: absolute; top: 200px;"
+	bind:this={inputRef}
+	style="position: absolute; top: -2000px; left: -1000px;"
 	bind:value={inputValue}
 	on:keydown={handleTyping}
 />
