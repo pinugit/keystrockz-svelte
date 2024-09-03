@@ -4,10 +4,12 @@
 
 	let wordArray: string[] = [];
 	const noOfLetterPerWordArray: number[] = [];
-	let toggleInputFocusOnChildren;
+	let toggleInputFocusOnChildren: () => void;
+	let noOfDummyElement = 15;
+	const space = ' ';
 
 	onMount(async () => {
-		const response = await fetch('/api/random-array/');
+		const response = await fetch('/api/random-array/?limit=18');
 		wordArray = await response.json();
 		console.log(wordArray);
 		updateNoOfLetterPerWordArray();
@@ -24,8 +26,6 @@
 			toggleInputFocusOnChildren();
 		}
 	};
-
-	const space = ' ';
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -45,6 +45,14 @@
 				<div class={`letter-${wordIndex}-${word.length} space due`}>{space}</div>
 			</div>
 		{/each}
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
+		<div class="dummy-word"></div>
 	</div>
 </div>
 <Cursor {noOfLetterPerWordArray} bind:toggleInputFocus={toggleInputFocusOnChildren} />
@@ -75,6 +83,10 @@
 	}
 	.space {
 		width: 20px;
+	}
+	.dummy-word {
+		width: 10000px;
+		height: 20px;
 	}
 	/* these classes are for letters to set there colors based on the user typong */
 	.due {
