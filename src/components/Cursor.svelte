@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { afterUpdate, onMount } from 'svelte';
+	import { afterUpdate, createEventDispatcher, onMount } from 'svelte';
 
 	let x = 0;
 	let y = 0;
@@ -8,6 +8,8 @@
 	let currentLetterIndex = 0;
 	let inputValue = '';
 	let inputRef: HTMLInputElement;
+	let isRoundNotEnd = true;
+	const dispatcher = createEventDispatcher();
 	export let noOfLetterPerWordArray;
 
 	export const toggleInputFocus = () => {
@@ -49,6 +51,15 @@
 		const key = event.key;
 		inputValue = '';
 		console.log(key);
+
+		if (
+			currentWordIndex + 1 === noOfLetterPerWordArray.length &&
+			currentLetterIndex + 1 === noOfLetterPerWordArray[currentWordIndex]
+		) {
+			dispatcher('roundEnd', true);
+			inputRef.blur();
+			isRoundNotEnd = false;
+		}
 
 		//move the curor position
 		if (key === 'Shift' || key === 'Control' || key === 'Alt') {
@@ -101,16 +112,18 @@
 	});
 </script>
 
-{#if y > 10}
-	<div class="cursor" style="top:{y}px; left:{x}px"></div>
+{#if isRoundNotEnd}
+	{#if y > 10}
+		<div class="cursor" style="top:{y}px; left:{x}px"></div>
+	{/if}
+	<input
+		type="text"
+		bind:this={inputRef}
+		style="position: absolute; top: -2000px; left: -1000px;"
+		bind:value={inputValue}
+		on:keydown={handleTyping}
+	/>
 {/if}
-<input
-	type="text"
-	bind:this={inputRef}
-	style="position: absolute; top: -2000px; left: -1000px;"
-	bind:value={inputValue}
-	on:keydown={handleTyping}
-/>
 
 <style>
 	.cursor {

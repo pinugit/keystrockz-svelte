@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Cursor from '../components/Cursor.svelte';
+	import RoundEndScreen from '../components/RoundEndScreen.svelte';
 
 	let wordArray: string[] = [];
 	const noOfLetterPerWordArray: number[] = [];
 	let toggleInputFocusOnChildren: () => void;
-	let noOfDummyElement = 15;
+	let isRoundEnd = false;
 	const space = ' ';
 
+	$: console.log(isRoundEnd);
+
 	onMount(async () => {
-		const response = await fetch('/api/random-array/?limit=18');
+		const response = await fetch('/api/random-array/?limit=5');
 		wordArray = await response.json();
 		console.log(wordArray);
 		updateNoOfLetterPerWordArray();
@@ -26,36 +29,53 @@
 			toggleInputFocusOnChildren();
 		}
 	};
+
+	const handleRoundEnd = (event: { detail: boolean }) => {
+		setTimeout(() => {
+			isRoundEnd = event.detail;
+		}, 300);
+	};
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="page-container">
-	<div
-		class="typing-container"
-		on:click={handleInputFoucs}
-		role="button"
-		tabindex="0"
-		aria-label="click here to start typing"
-	>
-		{#each wordArray as word, wordIndex}
-			<div class="words">
-				{#each word as letter, letterIndex}
-					<div class={`letter-${wordIndex}-${letterIndex} due`}>{letter}</div>
-				{/each}
-				<div class={`letter-${wordIndex}-${word.length} space due`}>{space}</div>
-			</div>
-		{/each}
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-		<div class="dummy-word"></div>
-	</div>
+	{#if isRoundEnd}
+		<RoundEndScreen />
+		<h1 style="color: white;">hello world</h1>
+	{/if}
+
+	{#if !isRoundEnd}
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<div
+			class="typing-container"
+			on:click={handleInputFoucs}
+			role="button"
+			tabindex="0"
+			aria-label="click here to start typing"
+		>
+			{#each wordArray as word, wordIndex}
+				<div class="words">
+					{#each word as letter, letterIndex}
+						<div class={`letter-${wordIndex}-${letterIndex} due`}>{letter}</div>
+					{/each}
+					<div class={`letter-${wordIndex}-${word.length} space due`}>{space}</div>
+				</div>
+			{/each}
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+			<div class="dummy-word"></div>
+		</div>
+		<Cursor
+			{noOfLetterPerWordArray}
+			bind:toggleInputFocus={toggleInputFocusOnChildren}
+			on:roundEnd={handleRoundEnd}
+		/>
+	{/if}
 </div>
-<Cursor {noOfLetterPerWordArray} bind:toggleInputFocus={toggleInputFocusOnChildren} />
 
 <style>
 	.page-container {
