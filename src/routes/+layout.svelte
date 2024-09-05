@@ -12,7 +12,6 @@
 		alt="shape"
 		style="position: absolute; bottom:100px; right:0px"
 	/>
-	<Navbar />
 	<slot></slot>
 </div>
 
@@ -22,8 +21,5 @@
 		background: #141414;
 		position: relative;
 		padding: 0 80px;
-	}
-	.w {
-		color: red;
 	}
 </style>

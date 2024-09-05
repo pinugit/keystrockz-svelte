@@ -1,4 +1,8 @@
-<div class="navbar">
+<script>
+	import { fly } from 'svelte/transition';
+</script>
+
+<div class="navbar" transition:fly={{ y: -200, duration: 1000 }}>
 	<a href="/" style="padding-top: 10px;">
 		<img src="/logo.png" alt="keystrockz logo" width="120px" />
 	</a>

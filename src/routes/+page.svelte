@@ -2,11 +2,13 @@
 	import { onMount } from 'svelte';
 	import Cursor from '../components/Cursor.svelte';
 	import RoundEndScreen from '../components/RoundEndScreen.svelte';
+	import Navbar from '../components/Navbar.svelte';
 
 	let wordArray: string[] = [];
 	const noOfLetterPerWordArray: number[] = [];
 	let toggleInputFocusOnChildren: () => void;
 	let isRoundEnd = false;
+	let isRoundStarted = false;
 	const space = ' ';
 
 	$: console.log(isRoundEnd);
@@ -24,7 +26,7 @@
 		});
 	};
 
-	const handleInputFoucs = () => {
+	const handleInputFocus = () => {
 		if (toggleInputFocusOnChildren) {
 			toggleInputFocusOnChildren();
 		}
@@ -33,21 +35,32 @@
 	const handleRoundEnd = (event: { detail: boolean }) => {
 		setTimeout(() => {
 			isRoundEnd = event.detail;
-		}, 300);
+		}, 100);
+	};
+
+	const handleRoundStart = (event: { detail: boolean }) => {
+		isRoundStarted = event.detail;
 	};
 </script>
 
+{#if !isRoundStarted || isRoundEnd}
+	<Navbar />
+{/if}
 <div class="page-container">
 	{#if isRoundEnd}
-		<RoundEndScreen />
-		<h1 style="color: white;">hello world</h1>
+		<RoundEndScreen
+			on:reset={() => {
+				isRoundEnd = false;
+				isRoundStarted = false;
+			}}
+		/>
 	{/if}
 
 	{#if !isRoundEnd}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			class="typing-container"
-			on:click={handleInputFoucs}
+			on:click={handleInputFocus}
 			role="button"
 			tabindex="0"
 			aria-label="click here to start typing"
@@ -73,6 +86,7 @@
 			{noOfLetterPerWordArray}
 			bind:toggleInputFocus={toggleInputFocusOnChildren}
 			on:roundEnd={handleRoundEnd}
+			on:RoundStarted={handleRoundStart}
 		/>
 	{/if}
 </div>
