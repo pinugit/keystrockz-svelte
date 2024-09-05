@@ -3,6 +3,7 @@
 	import Cursor from '../components/Cursor.svelte';
 	import RoundEndScreen from '../components/RoundEndScreen.svelte';
 	import Navbar from '../components/Navbar.svelte';
+	import RoundModes from '../components/RoundModes.svelte';
 
 	let wordArray: string[] = [];
 	const noOfLetterPerWordArray: number[] = [];
@@ -16,7 +17,6 @@
 	onMount(async () => {
 		const response = await fetch('/api/random-array/?limit=5');
 		wordArray = await response.json();
-		console.log(wordArray);
 		updateNoOfLetterPerWordArray();
 	});
 
@@ -54,6 +54,12 @@
 				isRoundStarted = false;
 			}}
 		/>
+	{/if}
+	{#if !isRoundStarted}
+		<RoundModes />
+	{/if}
+	{#if isRoundStarted && !isRoundEnd}
+		<div>timer</div>
 	{/if}
 
 	{#if !isRoundEnd}
@@ -96,6 +102,7 @@
 		height: 100%;
 		width: 100%;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		color: #f0f0f0;
