@@ -26,6 +26,7 @@
 	export const toggleInputFocus = () => {
 		inputRef.focus();
 	};
+
 	const setCursorPosition = (key: string = '') => {
 		const currentElement = document.getElementsByClassName(
 			`letter-${currentWordIndex}-${currentLetterIndex}`
@@ -36,7 +37,7 @@
 			x = currentElementRect.left;
 			return;
 		}
-		if (y > initialY) {
+		if (y > initialY + 50) {
 			x = currentElementRect.left;
 		} else {
 			y = currentElementRect.top;

@@ -1,27 +1,28 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<style>
+		/* these styles are used for letter coloring */
+		.incorrect-word {
+			color: #ef5350;
+		}
+		.correct-word {
+			color: #f0f0f0;
+		}
+	</style>
 
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	%sveltekit.head%
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-</head>
-<style>
-	/* these styles are used for letter coloring */
-	.incorrect-word{
-		color: #ef5350;
-	}
-	.correct-word{
-		color: #f0f0f0;
-	}
-</style>
-
-<body data-sveltekit-preload-data="hover" style="margin: 0;">
-	<div style="display: contents">%sveltekit.body%</div>
-</body>
-
+	<body data-sveltekit-preload-data="hover" style="margin: 0">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
 </html>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 	import RoundData from '../stores/RoundData';
+	introd;
 
 	let newRoundData: {
 		totalCharacters: number;

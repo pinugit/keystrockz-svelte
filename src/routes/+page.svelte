@@ -4,6 +4,8 @@
 	import RoundEndScreen from '../components/RoundEndScreen.svelte';
 	import Navbar from '../components/Navbar.svelte';
 	import RoundModes from '../components/RoundModes.svelte';
+	import { fly } from 'svelte/transition';
+	import { backOut } from 'svelte/easing';
 
 	let wordArray: string[] = [];
 	const noOfLetterPerWordArray: number[] = [];
@@ -15,9 +17,10 @@
 	$: console.log(isRoundEnd);
 
 	onMount(async () => {
-		const response = await fetch('/api/random-array/?limit=5');
+		const response = await fetch('/api/random-array/?limit=40');
 		wordArray = await response.json();
 		updateNoOfLetterPerWordArray();
+		// let animate = true;
 	});
 
 	const updateNoOfLetterPerWordArray = () => {
@@ -59,7 +62,7 @@
 		<RoundModes />
 	{/if}
 	{#if isRoundStarted && !isRoundEnd}
-		<div>timer</div>
+		<div style="height: 40px;">timer</div>
 	{/if}
 
 	{#if !isRoundEnd}
@@ -72,7 +75,14 @@
 			aria-label="click here to start typing"
 		>
 			{#each wordArray as word, wordIndex}
-				<div class="words">
+				<div
+					class="words"
+					transition:fly={{
+						y: 70,
+						delay: wordIndex * 40,
+						easing: backOut
+					}}
+				>
 					{#each word as letter, letterIndex}
 						<div class={`letter-${wordIndex}-${letterIndex} due`}>{letter}</div>
 					{/each}
@@ -113,9 +123,10 @@
 		overflow: hidden;
 		scrollbar-width: none;
 		font-size: 40px;
-		font-family: 'jetbrains mono';
+		font-family: 'Space Grotesk';
 		display: flex;
 		flex-wrap: wrap;
+		margin-top: 8px;
 	}
 	.words {
 		display: flex;
